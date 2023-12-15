@@ -1,36 +1,57 @@
-<?php include("config/partials/header.php"); ?>
+<?php include("config/partials/header.php"); 
+
+if(isset($_GET['id'])){
+  $id = base64_decode($_GET['id']);
+
+  $query = "SELECT * FROM posts WHERE id = $id";
+  $result_id = mysqli_query($conn,$query);
+  $row = mysqli_fetch_assoc($result_id);
+
+}else{
+  header('location: ' .ROOT_URL. 'admin/');
+  die();
+}
+// fetch categories frpom database
+
+
+$category_query = "SELECT * FROM categories ";
+$result = mysqli_query($conn,$category_query);
+$num_category = mysqli_num_rows($result);
+?>
 
 
     <section class="form__section">
       <div class="container form__section-container">
         <h2>Edit Post</h2>
-        <form action="" enctype="multipart/form-data">
-          <input type="text" placeholder="Category Title" />
-          <select name="" id="">
-            <option value="1">Travel</option>
-            <option value="1">Travel</option>
-            <option value="1">Travel</option>
-            <option value="1">Travel</option>
+       
+        <form action="<?= ROOT_URL?>admin/edit-post-logic.php" method="post" enctype="multipart/form-data">
+          <input type="text" placeholder="Post Title" name="title" value="<?= $row['title']?>" />
+          <input type="hidden" placeholder="Post Title" name="id" value="<?= $row['id']?>" />
+          <input type="hidden" placeholder="Post Title" name="previous_thumbnail" value="<?= $row['thumbnail']?>" />
+          <select name="category" id="">
+            <?php while($row_category = mysqli_fetch_assoc($result)) :?>
+            <option value="<?= $row_category['id']?>"><?= $row_category['title']?></option>
+            <?php endwhile ?>
           </select>
 
           <textarea
-            name=""
+            name="body"
             id=""
             cols="30"
             rows="10"
             placeholder="Body"
-          ></textarea>
+          ><?= $row['body']?></textarea>
 
           <div class="form__control inline">
-            <input type="checkbox" name="" id="is_featured" checked />
+            <input type="checkbox" name="is_featured" id="is_featured" value="1" checked />
             <label for="is_featured">Featured</label>
           </div>
 
           <div class="form__control">
             <label for="thumbnail">Change Thumbnail</label>
-            <input type="file" name="" id="thumbnail" />
+            <input type="file" name="thumbnail" id="thumbnail" />
           </div>
-          <button class="btn" type="submit">Update Post</button>
+          <button class="btn" type="submit" name="submit">Update Post</button>
         </form>
       </div>
     </section>

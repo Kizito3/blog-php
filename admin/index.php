@@ -16,6 +16,36 @@ $num = mysqli_num_rows($result);
           ?></p>
         </div>
         <?php endif ?>
+
+        <?php if(isset($_SESSION['edit-post'])) : ?>
+      <div class="alert__message error container">
+        <p><?= $_SESSION['edit-post'];
+            unset($_SESSION['edit-post']);
+            ?></p>
+      </div>
+    <?php endif ?>
+        <?php if(isset($_SESSION['delete-post'])) : ?>
+      <div class="alert__message error container">
+        <p><?= $_SESSION['delete-post'];
+            unset($_SESSION['delete-post']);
+            ?></p>
+      </div>
+    <?php endif ?>
+        <?php if(isset($_SESSION['delete-post-success'])) : ?>
+      <div class="alert__message success container">
+        <p><?= $_SESSION['delete-post-success'];
+            unset($_SESSION['delete-post-success']);
+            ?></p>
+      </div>
+    <?php endif ?>
+
+    <?php if(isset($_SESSION['edit-post-success'])) : ?>
+      <div class="alert__message success container">
+        <p><?= $_SESSION['edit-post-success'];
+            unset($_SESSION['edit-post-success']);
+            ?></p>
+      </div>
+    <?php endif ?>
       <div class="container dashboard__container">
         <!-- MOBILE ICONS FOR TOGGLE -->
         <button class="sidebar__toggle" id="show__sidebar-btn">
@@ -95,9 +125,9 @@ $num = mysqli_num_rows($result);
                  <?= $row['title']?>
                 </td>
                 <td><?= $category['title']?></td>
-                <td><a href="edit-user.php" class="btn sm warning">Edit</a></td>
+                <td><a href="<?= ROOT_URL ?>admin/edit-post.php?id=<?= base64_encode($row['id'])?>" class="btn sm warning">Edit</a></td>
                 <td>
-                  <a href="delete-category.php" class="btn sm danger">Delete</a>
+                  <a href="<?= ROOT_URL ?>admin/delete-post.php?id=<?= base64_encode($row['id'])?>" class="btn sm danger">Delete</a>
                 </td>
               </tr>
               <?php endwhile ?>
