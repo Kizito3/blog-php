@@ -3,7 +3,10 @@ include("config/partials/header.php");
 
 require 'config/database.php';
 
-
+$current_user = $_SESSION['user-id'];
+$query_users = "select * from users where not id = '$current_user'";
+$result_users = mysqli_query($conn,$query_users);
+$num_users = mysqli_num_rows($result_users);
 ?>
 
 
@@ -96,6 +99,7 @@ require 'config/database.php';
         </aside>
         <main>
           <h2>Manage Users</h2>
+          <?php if($num_users > 0) : ?>
           <table>
             <thead>
               <th>Name</th>
@@ -105,13 +109,7 @@ require 'config/database.php';
               <th>Admin</th>
             </thead>
             <tbody>
-              <?php 
-                $current_user = $_SESSION['user-id'];
-                $query_users = "select * from users where not id = '$current_user'";
-                $result_users = mysqli_query($conn,$query_users);
-                $num_users = mysqli_num_rows($result_users);
-                
-              ?>
+            
               <?php while ($row_users = mysqli_fetch_assoc($result_users)): 
                 
                ?>
@@ -127,6 +125,11 @@ require 'config/database.php';
               <?php endwhile ?>
             </tbody>
           </table>
+          <?php else : ?>
+            <div class="alert__message error">
+              <p><?= "No Users Found"?></p>
+            </div>
+            <?php endif ?>
         </main>
       </div>
     </section>

@@ -1,4 +1,8 @@
-<?php include("config/partials/header.php"); ?>
+<?php include("config/partials/header.php"); 
+ $query_cat = "select * from categories order by title";
+ $result_cat = mysqli_query($conn, $query_cat);
+ $num_cat = mysqli_num_rows($result_cat);
+?>
 
 <section class="dashboard">
   <?php if (isset($_SESSION['add-category-success'])) : ?>
@@ -16,6 +20,23 @@
           ?></p>
     </div>
   <?php endif ?>
+  <?php if (isset($_SESSION['delete-category-success'])) : ?>
+    <div class="alert__message success container">
+      <p><?= $_SESSION['delete-category-success'];
+          unset($_SESSION['delete-category-success']);
+          ?></p>
+    </div>
+  <?php endif ?>
+  <?php if (isset($_SESSION['delete-category'])) : ?>
+    <div class="alert__message error container">
+      <p><?= $_SESSION['delete-category'];
+          unset($_SESSION['delete-category']);
+          ?></p>
+    </div>
+  <?php endif ?>
+  <?php  if($success){
+                  echo '<div class="alert__message success container">'.$success.'</div>' ;
+                } ?>
   <div class="container dashboard__container">
     <!-- MOBILE ICONS FOR TOGGLE -->
     <button class="sidebar__toggle" id="show__sidebar-btn">
@@ -67,6 +88,7 @@
     </aside>
     <main>
       <h2>Manage Categories</h2>
+      <?php if($num_cat > 0) : ?>
       <table>
         <thead>
           <th>Title</th>
@@ -74,11 +96,6 @@
           <th>Delete</th>
         </thead>
         <tbody>
-          <?php
-          $query_cat = "select * from categories";
-          $result_cat = mysqli_query($conn, $query_cat);
-          $num_cat = mysqli_num_rows($result_cat);
-          ?>
           <?php
           while ($row_cat = mysqli_fetch_assoc($result_cat)) : ?>
             <tr>
@@ -93,6 +110,11 @@
           <?php endwhile ?>
         </tbody>
       </table>
+      <?php else : ?>
+        <div class="alert__message error">
+          <p><?= "No Categories Found"?></p>
+        </div>
+        <?php endif ?>
     </main>
   </div>
 </section>
