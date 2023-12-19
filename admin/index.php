@@ -65,7 +65,7 @@ $num = mysqli_num_rows($result);
             </li>
 
             <li>
-              <a href="dashboard.php" class="active"
+              <a href="index.php" class="active"
                 ><i class="uil uil-postcard"></i>
                 <h5>Manage Posts</h5></a
               >

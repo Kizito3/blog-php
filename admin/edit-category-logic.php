@@ -8,14 +8,14 @@ if (isset($_POST['submit'])) {
     $title = mysqli_real_escape_string($conn, $_POST['title']);
     $description = mysqli_real_escape_string($conn, $_POST['description']);
 
-    $token = mysqli_real_escape_string($conn, $_POST['token']);
+    $id = mysqli_real_escape_string($conn, $_POST['id']);
 
     if (!$title || !$description) {
         $error = "Invalid form input on edit page";
         include("edit-category.php");
         exit;
     }
-    $query = "update categories set title = '$title', description = '$description' where token = '$token'";
+    $query = "update categories set title = '$title', description = '$description' where id = '$id'";
     $result = mysqli_query($conn, $query);
 
     if ($result) {

@@ -1,89 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Blog website</title>
-    <!-- CSS LINK -->
-    <link rel="stylesheet" href="css/style.css" />
+<?php include("partials/header.php"); 
 
-    <!-- ===========================ICONSCOUT CDN ================= -->
-    <link
-      rel="stylesheet"
-      href="https://unicons.iconscout.com/release/v4.0.8/css/line.css"
-    />
+if(isset($_GET['id'])){
+  $id = base64_decode($_GET['id']);
 
-    <!-- ====================== GOOGLE FONTS ============================ -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap"
-      rel="stylesheet"
-    />
-  </head>
-  <body>
-    <!-- ==================== NAV SECTION ======================= -->
-    <nav>
-      <div class="container nav__container">
-        <a href="index.php" class="nav__logo">GOZIRIM</a>
-        <ul class="nav__items">
-          <li><a href="blog.php">Blog</a></li>
-          <li><a href="about.php">About</a></li>
-          <li><a href="services.php">Services</a></li>
-          <li><a href="contact.php">Contact</a></li>
-          <!-- <li><a href="sign-in.php">Sign In</a></li> -->
-          <li class="nav__profile">
-            <div class="avatar">
-              <img src="images/avatar1.jpg" alt="" />
-            </div>
-            <ul>
-              <li><a href="dashboard.php">Dashboard</a></li>
-              <li><a href="logout.php">LogOut</a></li>
-            </ul>
-          </li>
-        </ul>
+  $query = "SELECT * FROM posts WHERE id = $id ";
+  $result = mysqli_query($conn,$query);
+  $post = mysqli_fetch_assoc($result);
+}else{
+  header('location: ' .ROOT_URL . 'blog.php');
+}
 
-        <button id="open__nav-btn"><i class="uil uil-bars"></i></button>
-        <button id="close__nav-btn"><i class="uil uil-times"></i></button>
-      </div>
-    </nav>
-
-    <!-- ==================== END OF NAV SECTION ======================= -->
+?>
 
     <section class="singlepost">
       <div class="container singlepost__container">
-        <h2>Lorem ipsum dolor sit amet consectetur.</h2>
+        <h2><?= $post['title']?></h2>
         <div class="post__author">
+        <?php 
+              $author_id = $post['author_id'];
+
+              $query_author = "SELECT * FROM users WHERE id = $author_id";
+              $result_author = mysqli_query($conn,$query_author);
+              $row_author = mysqli_fetch_assoc($result_author);
+            ?>
           <div class="post__author-avatar">
-            <img src="images/avatar2.jpg" alt="" />
+            <img src="images/<?= $row_author['avatar']?>" alt="" />
           </div>
           <div class="post__author-info">
-            <h5>By: mary onubuogu</h5>
-            <small>Dec 6 2023 - 07:23 </small>
+            <h5>By: <?= "{$row_author['firstname']} {$row_author['lastname']}"?></h5>
+            <small><?= date("M d, Y, H:i", strtotime($post['date_time']))?> </small>
           </div>
         </div>
 
         <div class="singlepost__thumbnail">
-          <img src="images/blog33.jpg" alt="" />
+          <img src="images/<?= $post['thumbnail']?>" alt="" />
         </div>
         <p>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Similique
-          quasi est eligendi exercitationem itaque, harum earum natus eveniet
-          fugit recusandae? Vero temporibus quidem repellat asperiores. Dolorum
-          et aliquid ipsum tenetur. Minima nobis tempore reprehenderit dolorem
-          error praesentium corrupti qui cum.
-        </p>
-        <p>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Similique
-          quasi est eligendi exercitationem itaque, harum earum natus eveniet
-          fugit recusandae? Vero temporibus quidem repellat asperiores. Dolorum
-          et aliquid ipsum tenetur. Minima nobis tempore reprehenderit dolorem
-          error praesentium corrupti qui cum.
-        </p>
-        <p>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Similique
-          quasi est eligendi exercitationem itaque, harum earum natus eveniet
-          fugit recusandae? Vero temporibus quidem repellat asperiores. Dolorum
-          et aliquid ipsum tenetur. Minima nobis tempore reprehenderit dolorem
-          error praesentium corrupti qui cum.
+          <?=$post['body']?>
         </p>
       </div>
     </section>

@@ -42,10 +42,13 @@ $num_category = mysqli_num_rows($result);
             placeholder="Body"
           ><?= $row['body']?></textarea>
 
+          <?php if(isset($_SESSION['user_is_admin'])) :?>
           <div class="form__control inline">
-            <input type="checkbox" name="is_featured" id="is_featured" value="1" checked />
+            <input type="checkbox" name="is_featured" value="1" id="is_featured" checked />
             <label for="is_featured">Featured</label>
           </div>
+
+          <?php endif ?>
 
           <div class="form__control">
             <label for="thumbnail">Change Thumbnail</label>

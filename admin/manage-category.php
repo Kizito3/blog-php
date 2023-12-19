@@ -55,7 +55,7 @@
         </li>
 
         <li>
-          <a href="dashboard.php"><i class="uil uil-postcard"></i>
+          <a href="index.php"><i class="uil uil-postcard"></i>
             <h5>Manage Posts</h5>
           </a>
         </li>
@@ -101,10 +101,10 @@
             <tr>
               <td><?= $row_cat['title'] ?></td>
               <td>
-                <a href="<?= ROOT_URL ?>admin/edit-category.php?token=<?= $row_cat['token'] ?>" class="btn sm warning">Edit</a>
+                <a href="<?= ROOT_URL ?>admin/edit-category.php?id=<?= base64_encode($row_cat['id']) ?>" class="btn sm warning">Edit</a>
               </td>
               <td>
-                <a href="<?= ROOT_URL ?>admin/delete-category.php?token=<?= $row_cat['token'] ?>" class="btn sm danger">Delete</a>
+                <a href="<?= ROOT_URL ?>admin/delete-category.php?id=<?= base64_encode($row_cat['id']) ?>" class="btn sm danger">Delete</a>
               </td>
             </tr>
           <?php endwhile ?>

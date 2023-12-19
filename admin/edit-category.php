@@ -1,9 +1,9 @@
 <?php include("config/partials/header.php");
 
-if (isset($_GET['token'])) {
-  $token = $_GET['token'];
+if (isset($_GET['id'])) {
+  $id = base64_decode($_GET['id']);
 
-  $query = "select * from categories where token = '$token'";
+  $query = "select * from categories where id = '$id'";
   $result = mysqli_query($conn, $query);
   $row = mysqli_fetch_assoc($result);
 }
@@ -28,7 +28,7 @@ if (isset($_GET['token'])) {
                 ?>
     <form action="<?=ROOT_URL?>admin/edit-category-logic.php" method="post">
       <input type="text" placeholder="Category Title" name="title" value="<?= $row['title'] ?>" />
-      <input type="hidden" placeholder="Category Title" name="token" value="<?= $row['token'] ?>" />
+      <input type="hidden" placeholder="Category Title" name="id" value="<?= $row['id'] ?>" />
       <textarea name="description" id="" cols="30" rows="4" placeholder="Description"><?= $row['description'] ?></textarea>
       <button class="btn" type="submit" name="submit">Update Category</button>
     </form>

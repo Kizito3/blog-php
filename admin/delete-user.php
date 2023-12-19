@@ -1,11 +1,12 @@
 <?php 
 
     require 'config/database.php';
+    
     if (isset($_GET['id'])) {
         $id = base64_decode($_GET['id']);
         // fetch user from database
 
-        $query = "select * from users where id = $id";
+        $query = " SELECT * FROM users WHERE id = $id";
         $result = mysqli_query($conn,$query);
         $row = mysqli_fetch_assoc($result);
 
@@ -22,7 +23,7 @@
 
         // fetch all thumbnails of user's post and delete them
 
-        $thumbnails_query = "SELECT thumbnail FROM posts WHERE author_id = $id";
+        $thumbnails_query = " SELECT thumbnail FROM posts WHERE author_id = $id";
         $thumbnail_result = mysqli_query($conn,$thumbnails_query);
         if(mysqli_num_rows($thumbnail_result) > 0){
             while($thumbnail = mysqli_fetch_assoc($thumbnail_result)){
@@ -46,3 +47,4 @@
 
     }
     header('location: ' . ROOT_URL . 'admin/manage-user.php');
+    die();

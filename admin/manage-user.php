@@ -61,7 +61,7 @@ $num_users = mysqli_num_rows($result_users);
             </li>
 
             <li>
-              <a href="dashboard.php"
+              <a href="index.php"
                 ><i class="uil uil-postcard"></i>
                 <h5>Manage Posts</h5></a
               >

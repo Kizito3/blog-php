@@ -21,7 +21,7 @@
                 $result_delete = mysqli_query($conn,$query_delete);
 
                 if(!mysqli_errno($conn)){
-                    $_SESSION['delete-post-success'] = "Post '{$row['title']}' deleted successfully";;
+                    $_SESSION['delete-post-success'] = "Post deleted successfully";;
                 }
             }
         }
